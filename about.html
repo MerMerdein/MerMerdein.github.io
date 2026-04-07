@@ -10,33 +10,45 @@
                 display: flex;
                 min-height: 100vh;
             }
-            .nav {
+           .nav {
                 background-color: #03253c;
                 width: 250px;
-                padding: 20px;
+                padding: 80px 20px 20px;
                 flex-shrink: 0;
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 999;
             }
-            
             .nav a {
                 color: #ffffff;
                 text-decoration: none;
                 font: 1em sans-serif;
             }
-          .content {
-            flex: 1;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 50px;
-            gap: 50px;
+            .content {
+                flex: 1;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                padding: 50px;
+                gap: 50px;
+                padding-top: 80px;
+                padding-left: 80px;
+                background-image: url("Background.jpg");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                transition: margin-left 0.3s ease;
+            }
 
-            background-image: url("Background.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            .content.shift {
+                margin-left: 250px;
             }
             .content h1 {
                 color: #000000;
@@ -54,11 +66,49 @@
                 padding: 5px 10px;
                 width: fit-content;
             }
+            .menu-btn {
+                display: block;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                background-color: #03253c;
+                color: white;
+                border: none;
+                padding: 10px 14px;
+                font-size: 24px;
+                cursor: pointer;
+                border-radius: 8px;
+                z-index: 1000;
+            }
+            .nav.show {
+                transform: translateX(0);
+                }
+         @media (max-width: 768px) {
+            body {
+                flex-direction: row;
+            }
+            .nav.show {
+                transform: translateX(0);
+            }
+            .nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .menu-btn {
+                display: block;
+            }
+            }
         </style>
     </head>
     <body>
-        <div class="nav">
-            <a href="index.html">Home</a>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="nav" id="menu">
+            <a href="page.html">Home</a>
             <a href="about.html">About</a>
             <a href="socials.html">Socials</a>
         </div>
@@ -68,5 +118,16 @@
             <h1>What is "Job Change Log"?</h1>
             <p>The story follows the lives of individuals at different crossroads in their careers. Whether it's the struggle of finding a first job, the courage to leave a stable position for a passion, or managing the social dynamics of an office, the series resonates with anyone trying to find their place in the modern world. Its blend of relatable drama and distinct art style makes it a standout title for fans of slice-of-life storytelling.</p>
         </div>
+        <script>
+            function toggleMenu() {
+                document.getElementById("menu").classList.toggle("show");
+                document.querySelector(".content").classList.toggle("shift");
+            }
+            document.querySelectorAll(".nav a").forEach(link => {
+                link.addEventListener("click", () => {
+                    document.getElementById("menu").classList.remove("show");
+                });
+            });
+            </script>
     </body>
 </html>
